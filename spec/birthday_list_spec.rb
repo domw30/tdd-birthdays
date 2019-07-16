@@ -1,4 +1,5 @@
 require 'birthday_list'
+require 'timecop'
 
 describe BirthdayList do
 
@@ -21,6 +22,18 @@ describe BirthdayList do
       birthday_list.add('Dominic White', '30 January 1991')
       birthday_list.add('Benjamin White', '01 August 1989')
       expect { birthday_list.display }.to output("Dominic White: 30 January 1991\nBenjamin White: 01 August 1989\n").to_stdout
+    end
+  end
+
+  describe '#check_date' do
+    it 'checks date for birthdays today' do
+      Timecop.freeze(Time.parse('16 July 2019')) do
+        birthday_list = BirthdayList.new
+        birthday_list.add('Dominic White', '30 January 1991')
+        birthday_list.add('Benjamin White', '01 August 1989')
+        birthday_list.add('Bob Jones', '16 July 1999')
+        expect { birthday_list.check_date }.to output("Bob Jones is 20 today ! Happy Birthday Bob Jones !\n").to_stdout
+      end
     end
   end
 end
