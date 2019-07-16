@@ -35,5 +35,12 @@ describe BirthdayList do
         expect { birthday_list.check_date }.to output("Bob Jones is 20 today ! Happy Birthday Bob Jones !\n").to_stdout
       end
     end
+
+    it 'checks birthdays when there are none on that date' do
+      birthday_list = BirthdayList.new
+      birthday_list.add('Dominic White', '30 January 1991')
+      birthday_list.add('Benjamin White', '01 August 1989')
+      expect { birthday_list.check_date }.to_not output().to_stdout
+    end
   end
 end
